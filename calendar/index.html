@@ -82,7 +82,7 @@
                 alert("Username or password cannot be empty!");
             } else {
                 // In a real scenario, you would handle authentication here.
-                alert("Login successful!");
+                window.location.href = "calendar.html?email=" + encodeURIComponent(username);
             }
         });
     </script>
