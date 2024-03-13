@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Attractive background color */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #007bff; /* Attractive button color */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <iframe src="https://calendar.google.com/calendar/embed?src=" width="300" height="300" frameborder="0" scrolling="no"></iframe>
+        <button id="create-calendar" onclick="redirectToCreateCalendar()">Create Calendar</button>
+    </div>
+
+    <script>
+        function redirectToCreateCalendar() {
+            // Redirect to the create_calendar.html page
+            window.location.href = "create_calendar.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Attractive background color */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        input, select {
+            padding: 10px;
+            margin-top: 20px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff; /* Attractive button color */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Calendar</h1>
+        <form id="calendar-form" onsubmit="return createCalendar()">
+            <input type="text" id="name" placeholder="Enter Calendar Name">
+            <input type="text" id="description" placeholder="Enter Description">
+            <input type="datetime-local" id="datetime" required>
+            <button type="submit">Create Calendar</button>
+        </form>
+    </div>
+
+    <script>
+        function createCalendar() {
+            var name = document.getElementById("name").value.trim();
+            var description = document.getElementById("description").value.trim();
+            var datetime = document.getElementById("datetime").value.trim();
+    
+            if (name === "" || description === "" || datetime === "") {
+                alert("Please fill out all fields.");
+                return false;
+            }
+    
+            var data = {
+                name: name,
+                description: description,
+                datetime: datetime,
+            };
+    
+            fetch("https://script.google.com/macros/s/AKfycbzg1kObNVU1gpC0S-p417PzMaV4obJcM1Q1PWbRkSZhM7MPDsjRCjYl2paqbLknxsFE/exec?action=alluser", {
+                redirect: "follow",
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8",
+                },
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then((data) => {
+                // Redirect to calendar.html page with parameters
+                window.location.href = `calendar.html?name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}&datetime=${encodeURIComponent(datetime)}`;
+            }).catch((error) => {
+                console.error('There was a problem with your fetch operation:', error);
+                return false;
+            });
+    
+            return false; // Prevent form submission
+        }
+    </script>
+    
+</body>
+</html>

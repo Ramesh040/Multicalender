@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Calendar</title>
+</head>
+<body>
+    <iframe src="about:blank" id="googleCalendar" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    
+    <script>
+        function loadGoogleCalendar(name, description, datetime) {
+            const calendarData = {
+                name: name,
+                description: description,
+                datetime: datetime
+            };
+            
+            // Construct Google Calendar URL with data
+            const googleCalendarUrl = `https://calendar.google.com/calendar/embed?src=${calendarData.name}&ctz=UTC&details=${calendarData.description}&dates=${calendarData.datetime}/${calendarData.datetime}`;
+            
+            // Set iframe source to the generated Google Calendar URL
+            document.getElementById("googleCalendar").src = googleCalendarUrl;
+        }
+
+        // Retrieve data from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        const description = urlParams.get('description');
+        const datetime = urlParams.get('datetime');
+        
+        // Load Google Calendar with provided data
+        loadGoogleCalendar(name, description, datetime);
+    </script>
+</body>
+</html>
