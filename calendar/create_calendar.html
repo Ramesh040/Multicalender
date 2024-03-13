@@ -72,6 +72,9 @@
                 datetime: datetime,
             };
     
+            // Prevent form submission
+            event.preventDefault();
+    
             fetch("https://script.google.com/macros/s/AKfycbzg1kObNVU1gpC0S-p417PzMaV4obJcM1Q1PWbRkSZhM7MPDsjRCjYl2paqbLknxsFE/exec?action=alluser", {
                 redirect: "follow",
                 method: "POST",
@@ -79,14 +82,15 @@
                 headers: {
                     "Content-Type": "text/plain;charset=utf-8",
                 },
-            }).then((response) => {
+            },window.location.href = `newcalendar.html?name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}&datetime=${encodeURIComponent(datetime)}`
+            ).then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
-            }).then((data) => {
-                // Redirect to calendar.html page with parameters
-                window.location.href = `calendar.html?name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}&datetime=${encodeURIComponent(datetime)}`;
+            }).then(() => {
+                // Redirect to newcalendar.html page with parameters
+                // window.location.href = `newcalendar.html?name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}&datetime=${encodeURIComponent(datetime)}`;
             }).catch((error) => {
                 console.error('There was a problem with your fetch operation:', error);
                 return false;
@@ -95,6 +99,7 @@
             return false; // Prevent form submission
         }
     </script>
+    
     
 </body>
 </html>

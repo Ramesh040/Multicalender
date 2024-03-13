@@ -3,34 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generated Calendar</title>
+    <title>New Calendar</title>
+    <!-- FullCalendar Styles -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .calendar {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <iframe src="about:blank" id="googleCalendar" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-    
-    <script>
-        function loadGoogleCalendar(name, description, datetime) {
-            const calendarData = {
-                name: name,
-                description: description,
-                datetime: datetime
-            };
-            
-            // Construct Google Calendar URL with data
-            const googleCalendarUrl = `https://calendar.google.com/calendar/embed?src=${calendarData.name}&ctz=UTC&details=${calendarData.description}&dates=${calendarData.datetime}/${calendarData.datetime}`;
-            
-            // Set iframe source to the generated Google Calendar URL
-            document.getElementById("googleCalendar").src = googleCalendarUrl;
-        }
+    <div class="container">
+        <h1>New Calendar</h1>
+        <div>
+            <p><strong>Name:</strong> <span id="calendar-name"></span></p>
+            <p><strong>Description:</strong> <span id="calendar-description"></span></p>
+            <p><strong>Date and Time:</strong> <span id="calendar-datetime"></span></p>
+        </div>
+        <!-- Embedded Google Calendar -->
+        <iframe src="https://calendar.google.com/calendar/embed?src=" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        <!-- FullCalendar -->
+        <div class="calendar" id="calendar"></div>
+    </div>
 
-        // Retrieve data from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('name');
-        const description = urlParams.get('description');
-        const datetime = urlParams.get('datetime');
-        
-        // Load Google Calendar with provided data
-        loadGoogleCalendar(name, description, datetime);
+    <!-- FullCalendar Scripts -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get data from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            const description = urlParams.get('description');
+            const datetime = urlParams.get('datetime');
+
+            // Display data
+            document.getElementById('calendar-name').textContent = name;
+            document.getElementById('calendar-description').textContent = description;
+            document.getElementById('calendar-datetime').textContent = datetime;
+
+            // Initialize FullCalendar
+            $('#calendar').fullCalendar({
+                defaultDate: moment(datetime), // Set default date
+                editable: false, // Disable editing
+                eventLimit: true, // Allow "more" link when too many events
+                selectable: true, // Enable date selection
+                select: function(start, end) { // Callback function when date is selected
+                    alert('Selected: ' + start.format() + ' to ' + end.format());
+                },
+                events: [
+                    {
+                        title: 'Calendar Event', // Event title
+                        start: moment(datetime), // Event start date
+                        color: 'pink' // Event color
+                    }
+                ]
+            });
+        });
     </script>
 </body>
 </html>
